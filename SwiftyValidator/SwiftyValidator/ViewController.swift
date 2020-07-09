@@ -20,7 +20,7 @@ class ViewController: UIViewController {
 		return stack
 	}()
 	
-	@Validated([.phone, .required])
+	@Validated([.required, .snils])
 	private var phoneTextField: UITextField = {
 		let textField = UITextField()
 		textField.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +54,7 @@ class ViewController: UIViewController {
 		return label
 	}()
 	
-	@Validated([.required, .password])
+	@Validated([.required])
 	private var passwordTextField: UITextField = {
 		let textField = UITextField()
 		textField.translatesAutoresizingMaskIntoConstraints = false
@@ -107,6 +107,8 @@ class ViewController: UIViewController {
 				self.phoneErrorLabel.text = "Обязательное поле"
 			case .phone:
 				self.phoneErrorLabel.text = "Номер должен состоять только из цифр"
+			case .snils:
+				self.phoneErrorLabel.text = "Неправильный формат СНИЛС"
 			default:
 				break
 			}
@@ -147,10 +149,6 @@ class ViewController: UIViewController {
 			self.passwordErrorLabel.isHidden = false
 			self.nameTextField.layer.borderWidth = 1
 		}
-		
-		$phoneTextField.onValidate = nil
-		$nameTextField.onValidate = nil
-		$passwordTextField.onValidate = nil
 	}
 
 	@objc
@@ -185,8 +183,8 @@ class ViewController: UIViewController {
 			switch passwordRule {
 			case .required:
 				passwordErrorLabel.text = "Обязательное поле"
-			case .password:
-				passwordErrorLabel.text = "Требуется не менее 8 символов"
+//			case .password:
+//				passwordErrorLabel.text = "Требуется не менее 8 символов"
 			default:
 				break
 			}

@@ -10,10 +10,26 @@ import Foundation
 
 @propertyWrapper
 class Validated<Value: ObservedField> {
+
+    var wrappedValue: Value
+	
+    var projectedValue: Validated<Value> {
+        self
+    }
+	
 	private var observer: NSObjectProtocol?
 
     private var rules: [ValidationRules]
-    var wrappedValue: Value
+
+    init(wrappedValue value: Value, _ rules: [ValidationRules]) {
+        wrappedValue = value
+        self.rules = rules
+    }
+	
+	deinit {
+		guard let observer = observer else { return }
+		NotificationCenter.default.removeObserver(observer)
+	}
 	
 	var onValidate: ((ValidationRules?) -> Void)? {
 		didSet {
@@ -30,23 +46,8 @@ class Validated<Value: ObservedField> {
 					let rule = self.validate()
 					onValidate(rule)
 			})
-
 		}
 	}
-
-    init(wrappedValue value: Value, _ rules: [ValidationRules]) {
-        wrappedValue = value
-        self.rules = rules
-    }
-	
-	deinit {
-		guard let observer = observer else { return }
-		NotificationCenter.default.removeObserver(observer)
-	}
-
-    var projectedValue: Validated<Value> {
-        self
-    }
 	
 	func validate() -> ValidationRules? {
 		rules.first(where: { !$0.validate(field: wrappedValue) })
