@@ -17,7 +17,7 @@ protocol ValidationRule {
 
 	If you need to use a custom rule, you should
 	create an object that implements the `ValidationRule` protocol
-	and transfer it using `ValidationRules.custom()`.
+	and pass it to `ValidationRules.custom(ValidationRule)`.
 
     For example:
 	~~~
@@ -26,6 +26,9 @@ protocol ValidationRule {
 			!field.validatedText.isEmpty
 		}
 	}
+
+	@Validated([.custom(RequiredRule())])
+	private var requiredTextField = UITextField()
 	~~~
 */
 enum ValidationRules: ValidationRule {
