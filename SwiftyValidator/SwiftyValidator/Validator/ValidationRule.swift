@@ -47,7 +47,7 @@ enum ValidationRules: ValidationRule {
 	case phone
 	/// Password regular expression: no length, at least one uppercase, at least one lowercase, at least one number.
 	case password
-	/// Date regular expression like masks (##.##.##) (##-##-##) (##/##/##)
+	/// Date regular expression like masks ##.##.## or ##-##-## or ##/##/##
 	case birthday
 	/// Snils regular expression like mask ###-###-### ##
 	case snils

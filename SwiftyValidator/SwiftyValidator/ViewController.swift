@@ -20,7 +20,7 @@ class ViewController: UIViewController {
 		return stack
 	}()
 	
-	@Validated([.required, .snils])
+	@Validated([.required, .phone])
 	private var phoneTextField: UITextField = {
 		let textField = UITextField()
 		textField.translatesAutoresizingMaskIntoConstraints = false
@@ -107,8 +107,6 @@ class ViewController: UIViewController {
 				self.phoneErrorLabel.text = "Обязательное поле"
 			case .phone:
 				self.phoneErrorLabel.text = "Номер должен состоять только из цифр"
-			case .snils:
-				self.phoneErrorLabel.text = "Неправильный формат СНИЛС"
 			default:
 				break
 			}
