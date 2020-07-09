@@ -88,7 +88,7 @@ enum ValidationRules: ValidationRule {
 			let regex = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{1,64}(\\.[a-zA-Z]{2,6})+"
 			return field.validatedText.range(of: regex, options: .regularExpression) != nil
 		case .phone:
-			let regex = "^\\+7\\s*\\(\\d{3}\\)\\s*\\d{3}\\-\\d{2}\\-\\d{2}"
+			let regex = "^\\+7\\s*\\(\\d{3}\\)\\s*\\d{3}[-| ]\\d{2}[-| ]\\d{2}"
 			return field.validatedText.range(of: regex, options: .regularExpression) != nil
 		case .password:
 			let regex = "^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[a-z]).*?$"
