@@ -17,7 +17,7 @@ class Validated<Value: ObservedField> {
         self
     }
 	
-	private var observer: NSObjectProtocol?
+	private var observers: [NSObjectProtocol] = []
 
     private var rules: [ValidationRules]
 
@@ -27,25 +27,38 @@ class Validated<Value: ObservedField> {
     }
 	
 	deinit {
-		guard let observer = observer else { return }
-		NotificationCenter.default.removeObserver(observer)
+		observers.forEach(NotificationCenter.default.removeObserver)
 	}
 	
-	var onValidate: ((ValidationRules?) -> Void)? {
+	var onChangeText: ((ValidationRules?) -> Void)? {
 		didSet {
-			if let observer = observer {
-				NotificationCenter.default.removeObserver(observer)
-			}
-			guard let onValidate = onValidate else { return }
-			observer = NotificationCenter.default.addObserver(
-				forName: wrappedValue.notificationName,
+			guard let onChangeText = onChangeText else { return }
+			let observer = NotificationCenter.default.addObserver(
+				forName: wrappedValue.notificationDidChangeText,
 				object: wrappedValue,
 				queue: nil,
 				using: { [weak self] _ in
 					guard let self = self else { return }
 					let rule = self.validate()
-					onValidate(rule)
+					onChangeText(rule)
 			})
+			observers.append(observer)
+		}
+	}
+	
+	var onEndEditing: ((ValidationRules?) -> Void)? {
+		didSet {
+			guard let onEndEditing = onEndEditing else { return }
+			let observer = NotificationCenter.default.addObserver(
+				forName: wrappedValue.notificationDidEndEditing,
+				object: wrappedValue,
+				queue: nil,
+				using: { [weak self] _ in
+					guard let self = self else { return }
+					let rule = self.validate()
+					onEndEditing(rule)
+			})
+			observers.append(observer)
 		}
 	}
 	

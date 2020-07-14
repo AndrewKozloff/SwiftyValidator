@@ -14,7 +14,11 @@ extension UITextField: ObservedField {
 		text ?? ""
 	}
 	
-	var notificationName: Notification.Name {
+	var notificationDidChangeText: Notification.Name {
 		UITextField.textDidChangeNotification
+	}
+	
+	var notificationDidEndEditing: Notification.Name {
+		UITextField.textDidEndEditingNotification
 	}
 }

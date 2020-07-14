@@ -13,6 +13,7 @@ protocol ValidatedField {
 }
 
 protocol ObservedField: ValidatedField {
-	var notificationName: Notification.Name { get }
+	var notificationDidChangeText: Notification.Name { get }
+	var notificationDidEndEditing: Notification.Name { get }
 }
 

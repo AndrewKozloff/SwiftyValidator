@@ -95,8 +95,9 @@ class ViewController: UIViewController {
 			passwordTextField.heightAnchor.constraint(equalToConstant: 50),
 			validateButton.heightAnchor.constraint(equalToConstant: 50)
 		])
+		let set = CharacterSet(charactersIn: "абв")
 		
-		$phoneTextField.onValidate = { rule in
+		$phoneTextField.onChangeText = { rule in
 			guard let rule = rule else {
 				self.phoneErrorLabel.isHidden = true
 				self.phoneTextField.layer.borderWidth = 0
@@ -114,7 +115,7 @@ class ViewController: UIViewController {
 			self.phoneTextField.layer.borderWidth = 1
 		}
 		
-		$nameTextField.onValidate = { rule in
+		$nameTextField.onChangeText = { rule in
 			guard let rule = rule else {
 				self.nameErrorLabel.isHidden = true
 				self.nameTextField.layer.borderWidth = 0
@@ -130,7 +131,7 @@ class ViewController: UIViewController {
 			self.nameTextField.layer.borderWidth = 1
 		}
 		
-		$passwordTextField.onValidate = { rule in
+		$passwordTextField.onChangeText = { rule in
 			guard let rule = rule else {
 				self.passwordErrorLabel.isHidden = true
 				self.nameTextField.layer.borderWidth = 0
